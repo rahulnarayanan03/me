@@ -4448,3 +4448,228 @@ html[data-theme="light"] .professional-document-card.project-card {
     max-height: calc(100dvh - 76px);
   }
 }
+
+/* ========================================================================== 
+   v26 mobile-first hero + RNSH-style persistent compact navigation
+   Keeps desktop unchanged. On phones the header becomes two rows, with every
+   section visible across the second row rather than hiding behind a menu.
+   ========================================================================== */
+
+.nav-label-compact,
+.mobile-hero-profile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --header-height: 96px;
+  }
+
+  html {
+    scroll-padding-top: 114px;
+  }
+
+  .site-header {
+    top: max(6px, env(safe-area-inset-top));
+    width: calc(100% - 12px);
+    max-width: calc(100% - 12px);
+    border-radius: 22px;
+  }
+
+  .nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand actions"
+      "links links";
+    align-items: center;
+    gap: 4px 7px;
+    min-height: 0;
+    padding: 6px 7px 7px;
+  }
+
+  .brand {
+    grid-area: brand;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .brand-text {
+    display: inline !important;
+    max-width: none;
+    overflow: visible;
+    font-size: 0.78rem;
+    text-overflow: clip;
+  }
+
+  .nav-actions {
+    grid-area: actions;
+    justify-self: end;
+    gap: 4px;
+  }
+
+  .icon-button {
+    width: 36px;
+    min-width: 36px;
+    height: 34px;
+    min-height: 34px;
+    padding: 0;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .menu-button {
+    display: none !important;
+  }
+
+  .nav-links,
+  .nav-links.open {
+    position: relative !important;
+    inset: auto !important;
+    grid-area: links;
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 2px;
+    width: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none;
+  }
+
+  .nav-pill {
+    display: block !important;
+    top: 2px;
+    height: calc(100% - 4px);
+  }
+
+  .nav-link {
+    min-width: 0;
+    min-height: 31px;
+    display: grid;
+    place-items: center;
+    padding: 4px 1px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: clamp(0.55rem, 2.05vw, 0.65rem);
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link.active {
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none;
+  }
+
+  .nav-label-full {
+    display: none;
+  }
+
+  .nav-label-compact {
+    display: inline;
+  }
+
+  body:not(.project-page) main {
+    padding-top: 108px;
+  }
+
+  main section[id] {
+    scroll-margin-top: 114px;
+  }
+
+  /* Put Rahul's face at the top of the phone hero, before the availability
+     pill and display heading. The snapshot card later avoids duplicating it. */
+  .mobile-hero-profile {
+    width: 96px;
+    aspect-ratio: 1;
+    display: block;
+    margin: 0 auto 14px;
+    padding: 5px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,.22), transparent 38%),
+      var(--surface-strong);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.35),
+      0 14px 34px rgba(0,0,0,.22),
+      0 0 24px rgba(92,142,255,.10);
+  }
+
+  .mobile-hero-profile img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .status-pill {
+    margin-inline: auto;
+  }
+
+  .hero-v2 {
+    padding-top: 14px;
+  }
+
+  /* Give the descender on "Engineer" enough line box and painted area. */
+  .hero-v2 h1 {
+    overflow: visible;
+    padding-bottom: 0.10em;
+    font-size: clamp(2.62rem, 12.2vw, 3.35rem);
+    line-height: 1.04;
+  }
+
+  .hero-v2 h1 span {
+    display: block;
+    padding-bottom: 0.08em;
+  }
+
+  .profile-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-photo-v2 {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .brand-text {
+    display: inline !important;
+    max-width: 150px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+
+  .nav-link {
+    font-size: clamp(0.53rem, 2.05vw, 0.62rem);
+  }
+
+  .mobile-hero-profile {
+    width: 88px;
+    margin-bottom: 12px;
+  }
+
+  .hero-v2 h1 {
+    font-size: clamp(2.45rem, 12.15vw, 3rem);
+    line-height: 1.05;
+  }
+}
