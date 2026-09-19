@@ -4890,7 +4890,7 @@ html.phone-device main section[id] {
    ========================================================================== */
 @media (max-width: 760px) {
   html {
-    scroll-padding-top: 220px;
+    scroll-padding-top: 100px;
   }
 
   main section[id] {
@@ -4899,7 +4899,7 @@ html.phone-device main section[id] {
 }
 
 html.phone-device {
-  scroll-padding-top: 220px;
+  scroll-padding-top: 100px;
 }
 
 html.phone-device main section[id] {
