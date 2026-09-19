@@ -4673,3 +4673,210 @@ html[data-theme="light"] .professional-document-card.project-card {
     line-height: 1.05;
   }
 }
+
+
+/* ========================================================================== 
+   v27 phone navigation: desktop-grade liquid glass on mobile
+   The phone keeps the two-row layout, but the nav rail now uses the same
+   translucent material language as the desktop header. A device class added
+   by JavaScript also preserves this layout when a phone browser requests its
+   "desktop site" viewport.
+   ========================================================================== */
+
+/* Normal phone viewport. */
+@media (max-width: 760px) {
+  .nav-links,
+  .nav-links.open {
+    padding: 4px !important;
+    border: 1px solid rgba(255, 255, 255, 0.52) !important;
+    border-radius: 16px !important;
+    background:
+      linear-gradient(122deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.05) 32%, rgba(255, 255, 255, 0.18) 58%, rgba(255, 255, 255, 0.04) 100%),
+      rgba(225, 235, 248, 0.13) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(185%) brightness(1.04);
+    backdrop-filter: blur(22px) saturate(185%) brightness(1.04);
+    box-shadow:
+      inset 0 1.25px 0 rgba(255, 255, 255, 0.64),
+      inset 0 -8px 12px -9px rgba(16, 34, 53, 0.16),
+      0 8px 20px rgba(16, 34, 53, 0.10) !important;
+  }
+
+  html[data-theme="dark"] .nav-links,
+  html[data-theme="dark"] .nav-links.open {
+    border-color: rgba(211, 228, 255, 0.22) !important;
+    background:
+      linear-gradient(122deg, rgba(160, 192, 255, 0.19) 0%, rgba(255, 255, 255, 0.02) 32%, rgba(144, 181, 255, 0.12) 58%, rgba(255, 255, 255, 0.015) 100%),
+      rgba(7, 17, 31, 0.27) !important;
+    box-shadow:
+      inset 0 1.25px 0 rgba(255, 255, 255, 0.27),
+      inset 0 -8px 12px -9px rgba(0, 0, 0, 0.48),
+      0 8px 22px rgba(0, 0, 0, 0.24),
+      0 0 18px rgba(92, 142, 255, 0.08) !important;
+  }
+
+  .nav-pill {
+    display: block !important;
+    top: 4px;
+    height: calc(100% - 8px);
+    border-radius: 12px;
+  }
+
+  .nav-link {
+    min-height: 32px;
+    border-radius: 12px;
+  }
+}
+
+/* Phone hardware stays in the phone navigation system even when Samsung
+   Internet / another browser requests a desktop-width viewport. */
+html.phone-device {
+  scroll-padding-top: 114px;
+}
+
+html.phone-device .site-header {
+  top: max(6px, env(safe-area-inset-top));
+  width: calc(100% - 12px);
+  max-width: calc(100% - 12px);
+  border-radius: 22px;
+}
+
+html.phone-device .nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "brand actions"
+    "links links";
+  align-items: center;
+  gap: 5px 7px;
+  min-height: 0;
+  padding: 7px;
+}
+
+html.phone-device .brand {
+  grid-area: brand;
+  min-width: 0;
+  gap: 8px;
+}
+
+html.phone-device .brand-mark {
+  width: 30px;
+  height: 30px;
+  flex-basis: 30px;
+}
+
+html.phone-device .brand-text {
+  display: inline !important;
+  max-width: min(220px, 46vw);
+  overflow: hidden;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.phone-device .nav-actions {
+  grid-area: actions;
+  justify-self: end;
+  margin-left: 0;
+  gap: 4px;
+}
+
+html.phone-device .icon-button {
+  width: 36px;
+  min-width: 36px;
+  height: 34px;
+  min-height: 34px;
+  padding: 0;
+}
+
+html.phone-device .theme-label {
+  display: none;
+}
+
+html.phone-device .menu-button {
+  display: none !important;
+}
+
+html.phone-device .nav-links,
+html.phone-device .nav-links.open {
+  position: relative !important;
+  inset: auto !important;
+  grid-area: links;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 2px;
+  width: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 4px !important;
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.52) !important;
+  border-radius: 16px !important;
+  background:
+    linear-gradient(122deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.05) 32%, rgba(255, 255, 255, 0.18) 58%, rgba(255, 255, 255, 0.04) 100%),
+    rgba(225, 235, 248, 0.13) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(185%) brightness(1.04);
+  backdrop-filter: blur(22px) saturate(185%) brightness(1.04);
+  box-shadow:
+    inset 0 1.25px 0 rgba(255, 255, 255, 0.64),
+    inset 0 -8px 12px -9px rgba(16, 34, 53, 0.16),
+    0 8px 20px rgba(16, 34, 53, 0.10) !important;
+}
+
+html[data-theme="dark"].phone-device .nav-links,
+html[data-theme="dark"].phone-device .nav-links.open {
+  border-color: rgba(211, 228, 255, 0.22) !important;
+  background:
+    linear-gradient(122deg, rgba(160, 192, 255, 0.19) 0%, rgba(255, 255, 255, 0.02) 32%, rgba(144, 181, 255, 0.12) 58%, rgba(255, 255, 255, 0.015) 100%),
+    rgba(7, 17, 31, 0.27) !important;
+  box-shadow:
+    inset 0 1.25px 0 rgba(255, 255, 255, 0.27),
+    inset 0 -8px 12px -9px rgba(0, 0, 0, 0.48),
+    0 8px 22px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(92, 142, 255, 0.08) !important;
+}
+
+html.phone-device .nav-pill {
+  display: block !important;
+  top: 4px;
+  height: calc(100% - 8px);
+  border-radius: 12px;
+}
+
+html.phone-device .nav-link {
+  min-width: 0;
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 4px 1px;
+  border-radius: 12px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(0.55rem, 2.05vw, 0.67rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+html.phone-device .nav-link:hover,
+html.phone-device .nav-link:focus-visible,
+html.phone-device .nav-link.active {
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none;
+}
+
+html.phone-device .nav-label-full {
+  display: none;
+}
+
+html.phone-device .nav-label-compact {
+  display: inline;
+}
+
+html.phone-device body:not(.project-page) main {
+  padding-top: 108px;
+}
+
+html.phone-device main section[id] {
+  scroll-margin-top: 114px;
+}

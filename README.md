@@ -132,3 +132,9 @@ The Documents nav state now begins at the Availability block at the end of the r
 ## Responsive layout
 
 The same site automatically switches layout using CSS media queries. Desktop/laptop styling is preserved above 760px; phones at 760px and below use a compact single-column layout with a touch-friendly navigation menu, stacked cards, mobile resume formatting and phone-sized typography. An additional 430px breakpoint handles narrow phones.
+
+
+## v27 responsive notes
+- Phone navigation now uses the same liquid-glass material language as the desktop header, including the moving active glass pill.
+- Real phone hardware keeps the persistent two-row phone navigation even if the browser requests a desktop-width site.
+- LinkedIn links prefer the installed LinkedIn app on phones, with an HTTPS fallback where app hand-off is unavailable.

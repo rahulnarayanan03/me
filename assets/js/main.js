@@ -12,6 +12,20 @@
   const yearTarget = document.querySelector('[data-current-year]');
   const themeColour = document.querySelector('meta[name="theme-color"]');
 
+  // Treat a real phone as a phone even when the browser requests a wide
+  // "desktop site" viewport. This mirrors the responsive strategy used on the
+  // RNSH product site and avoids falling back to the hamburger menu on phones.
+  const uaDataMobile = navigator.userAgentData?.mobile === true;
+  const mobileUA = /Android|iPhone|iPod|Windows Phone|Mobile/i.test(navigator.userAgent || '');
+  const hasTouch = (navigator.maxTouchPoints || 0) > 0;
+  const coarsePointer = window.matchMedia?.('(pointer: coarse)').matches === true;
+  const screenShortSide = Math.min(
+    Number(window.screen?.width) || window.innerWidth,
+    Number(window.screen?.height) || window.innerHeight
+  );
+  const isPhoneDevice = uaDataMobile || mobileUA || (hasTouch && coarsePointer && screenShortSide <= 900);
+  root.classList.toggle('phone-device', isPhoneDevice);
+
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
@@ -128,7 +142,14 @@
   });
 
   const positionNavPill = () => {
-    if (!navPill || window.innerWidth <= 900) return;
+    if (!navPill || !navLinksContainer) return;
+
+    const navStyle = window.getComputedStyle(navLinksContainer);
+    const pillStyle = window.getComputedStyle(navPill);
+    if (navStyle.display === 'none' || pillStyle.display === 'none') {
+      navPill.style.opacity = '0';
+      return;
+    }
 
     const activeLink = navLinks.find((link) => link.classList.contains('active'));
     if (!activeLink || window.scrollY < 80) {
@@ -228,7 +249,7 @@
 
   window.addEventListener('scroll', updateOnScroll, { passive: true });
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) setMenuOpen(false);
+    if (isPhoneDevice || window.innerWidth > 900) setMenuOpen(false);
     updateActiveNavigation();
     updateCaseNavigation();
   });
@@ -274,6 +295,33 @@
         event.preventDefault();
         openCard();
       }
+    });
+  });
+
+  // Prefer the native LinkedIn app on phones. Android receives an explicit
+  // app intent with a normal HTTPS fallback; iOS uses LinkedIn's HTTPS
+  // universal link in the same tab so the OS can hand it to the app.
+  document.querySelectorAll('a[href*="linkedin.com/in/"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (!isPhoneDevice || event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const webUrl = link.href;
+      event.preventDefault();
+
+      if (/Android/i.test(navigator.userAgent || '')) {
+        const url = new URL(webUrl);
+        const intentPath = `${url.host}${url.pathname}${url.search}${url.hash}`;
+        const fallback = encodeURIComponent(webUrl);
+        window.location.href = `intent://${intentPath}#Intent;scheme=https;package=com.linkedin.android;S.browser_fallback_url=${fallback};end`;
+        return;
+      }
+
+      // On iPhone/iPad, same-tab HTTPS navigation gives Universal Links the
+      // best chance to open LinkedIn directly when the user has the app.
+      link.removeAttribute('target');
+      window.location.href = webUrl;
     });
   });
 
