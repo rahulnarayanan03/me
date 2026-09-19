@@ -7,6 +7,7 @@
   const header = document.querySelector('.site-header');
   const navPill = document.querySelector('.nav-pill');
   const navLinks = [...document.querySelectorAll('.nav-link[href^="#"]')];
+  let lockedSectionId = null;
   const copyButton = document.querySelector('[data-copy-email]');
   const yearTarget = document.querySelector('[data-current-year]');
   const themeColour = document.querySelector('meta[name="theme-color"]');
@@ -81,7 +82,49 @@
   });
 
   navLinksContainer?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => setMenuOpen(false));
+    link.addEventListener('click', (event) => {
+      setMenuOpen(false);
+      const href = link.getAttribute('href');
+      if (href?.startsWith('#')) {
+        lockedSectionId = href.slice(1);
+        navLinks.forEach((navLink) => {
+          const isActive = navLink.getAttribute('href') === href;
+          navLink.classList.toggle('active', isActive);
+          if (isActive) navLink.setAttribute('aria-current', 'true');
+          else navLink.removeAttribute('aria-current');
+        });
+        requestAnimationFrame(positionNavPill);
+
+        // Contact is the last section, so a normal anchor jump can stop at almost
+        // the same scroll position as Documents. Send it to the real page bottom
+        // instead so the two navigation destinations feel visibly different.
+        if (href === '#contact') {
+          event.preventDefault();
+          history.replaceState(null, '', '#contact');
+          window.scrollTo({
+            top: document.documentElement.scrollHeight - window.innerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+
+  // Keep the section explicitly chosen from the navigation highlighted during
+  // the browser's smooth anchor scroll. Release that lock as soon as the user
+  // deliberately scrolls again, so normal scroll-spy behaviour resumes.
+  const releaseNavigationLock = () => {
+    if (!lockedSectionId) return;
+    lockedSectionId = null;
+    updateActiveNavigation();
+  };
+
+  window.addEventListener('wheel', releaseNavigationLock, { passive: true });
+  window.addEventListener('touchstart', releaseNavigationLock, { passive: true });
+  window.addEventListener('keydown', (event) => {
+    if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
+      releaseNavigationLock();
+    }
   });
 
   const positionNavPill = () => {
@@ -109,19 +152,40 @@
     if (!homepageSections.length) return;
 
     const headerOffset = (header?.getBoundingClientRect().bottom || 70) + 28;
-    let activeSection = null;
+    let activeSection = lockedSectionId
+      ? document.getElementById(lockedSectionId)
+      : null;
 
-    homepageSections.forEach((section) => {
-      if (section.getBoundingClientRect().top <= headerOffset) {
-        activeSection = section;
+    if (!activeSection) {
+      homepageSections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= headerOffset) {
+          activeSection = section;
+        }
+      });
+
+      // Start the Documents navigation state at the Availability block at the
+      // end of the resume. This gives Documents a meaningful scroll range before
+      // its cards appear and makes the transition back from Contact unambiguous.
+      const distanceFromBottom = Math.max(
+        0,
+        document.documentElement.scrollHeight - (window.scrollY + window.innerHeight)
+      );
+      const contactSection = document.getElementById('contact');
+      const documentsSection = document.getElementById('documents');
+      const documentsTrigger = document.getElementById('documents-activation-point');
+      const contactActivationZone = 32;
+
+      if (documentsSection && documentsTrigger && documentsTrigger.getBoundingClientRect().top <= headerOffset) {
+        activeSection = documentsSection;
       }
-    });
 
-    // The final section cannot always physically reach the activation line
-    // because there is no content below it. Treat the bottom of the page as
-    // being inside the final navigation section so Contact highlights reliably.
-    const atPageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-    if (atPageBottom) activeSection = homepageSections[homepageSections.length - 1];
+      // Contact is intentionally a very small end-of-page state. Clicking Contact
+      // still lands at the true bottom, while even a modest upward wheel scroll
+      // returns the highlight to Documents.
+      if (contactSection && distanceFromBottom <= contactActivationZone) {
+        activeSection = contactSection;
+      }
+    }
 
     navLinks.forEach((link) => {
       const isActive = activeSection && link.getAttribute('href') === `#${activeSection.id}`;

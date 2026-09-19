@@ -76,3 +76,59 @@ Then visit `http://localhost:8000`.
 - Replaced the remaining neutral grey secondary buttons with blue glass variants from the site's existing UI palette, including View resume, Download PDF, LinkedIn, GitHub and Resume.
 
 - The navigation brand mark uses the same SVG as the browser favicon for consistent identity.
+
+
+## Professional Documents
+
+The site includes two directly hosted portfolio documents under `assets/documents/`:
+
+- `Rahul_Narayanan_Internship_Reflection.pdf`
+- `Rahul_Narayanan_Industrus_Cover_Letter.pdf`
+
+They are linked from the **Professional Documents** section immediately below the Resume section.
+
+## v16 refinements
+- Project titles are centred within each project card.
+- Experience dates are vertically centred in their glass blocks.
+- Skills and Professional Documents now use the same accent-rail and hover language as Projects.
+- Documents remains highlighted after clicking it even when Contact is also visible near the bottom of the page; normal scroll highlighting resumes on manual scroll.
+- Removed the numbered badges from the two Professional Documents cards.
+
+
+## v16 visual consistency update
+- Skills and Documents now reuse the Projects card skeleton and glass styling.
+- Project/skill/document category headings are larger and easier to scan.
+- The three compact project cards keep the High Distinction badge on one line at desktop widths.
+
+
+## v17 final card cleanup
+- Removed the PDF pills from the Professional Documents cards.
+- Removed the explanatory footer strips from Skills and Professional Documents.
+- Matched the document action buttons to the same bright blue primary treatment as Email Rahul.
+- Changed Skills category headings to uppercase for consistency with Projects.
+
+
+## v18 refinement
+Unified the Projects, Skills, Professional Documents, and About method-card headings to an exact 14px font size.
+
+### v20 typography refinement
+- Projects, Skills and Documents card category headings are unified at 15px.
+- The two main About headings use the same responsive font size.
+- Method-card headings in About are restored to their normal readable size.
+
+### v21 refinement
+- Added an approximately ten-line physical scroll interval between Professional Documents and Contact so the Documents navigation state is not skipped when scrolling upward from the bottom of the page.
+
+
+### v22 navigation refinement
+- Removed the large visual spacer between Documents and Contact.
+- Added a small scroll-spy hysteresis zone near the page bottom so one normal wheel step upward changes the active nav state from Contact back to Documents.
+
+
+### v23 navigation refinement
+The Documents nav state now begins at the Availability block at the end of the resume. Contact is limited to a small bottom-of-page activation zone so scrolling upward returns to Documents immediately without adding visual whitespace.
+
+
+## Responsive layout
+
+The same site automatically switches layout using CSS media queries. Desktop/laptop styling is preserved above 760px; phones at 760px and below use a compact single-column layout with a touch-friendly navigation menu, stacked cards, mobile resume formatting and phone-sized typography. An additional 430px breakpoint handles narrow phones.
