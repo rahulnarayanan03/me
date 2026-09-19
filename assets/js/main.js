@@ -109,11 +109,29 @@
         });
         requestAnimationFrame(positionNavPill);
 
+        // On phones, position every nav target from the *actual rendered*
+        // two-row glass header instead of relying on a fixed CSS pixel offset.
+        // This prevents sections such as Documents from sliding underneath the
+        // taller mobile header, and also remains correct when a phone browser
+        // requests its desktop viewport.
+        if (isPhoneDevice) {
+          const target = document.querySelector(href);
+          if (target && header) {
+            event.preventDefault();
+            history.replaceState(null, '', href);
+
+            const headerBottom = header.getBoundingClientRect().bottom;
+            const targetTop = target.getBoundingClientRect().top + window.scrollY;
+            const landingGap = 12;
+
+            window.scrollTo({
+              top: Math.max(0, targetTop - headerBottom - landingGap),
+              behavior: 'smooth'
+            });
+          }
         // On desktop, keep the deliberate end-of-page Contact landing used to
-        // separate Contact from Documents. On a real phone, use the normal
-        // anchor position instead so the Contact heading lands directly below
-        // the two-row glass navigation like every other section.
-        if (href === '#contact' && !isPhoneDevice) {
+        // separate Contact from Documents.
+        } else if (href === '#contact') {
           event.preventDefault();
           history.replaceState(null, '', '#contact');
           window.scrollTo({

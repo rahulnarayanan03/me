@@ -138,3 +138,10 @@ The same site automatically switches layout using CSS media queries. Desktop/lap
 - Phone navigation now uses the same liquid-glass material language as the desktop header, including the moving active glass pill.
 - Real phone hardware keeps the persistent two-row phone navigation even if the browser requests a desktop-width site.
 - LinkedIn links prefer the installed LinkedIn app on phones, with an HTTPS fallback where app hand-off is unavailable.
+
+## v30 mobile nav landing fix
+
+- Phone navigation now calculates anchor landing positions from the real rendered height of the two-row Liquid Glass header.
+- Documents and other phone nav targets land immediately below the header with a small visual gap instead of being obscured by it.
+- The calculation also works when a phone browser requests its desktop viewport.
+- Desktop navigation behaviour is unchanged.
