@@ -5,6 +5,7 @@
   const menuButton = document.querySelector('[data-menu-toggle]');
   const navLinksContainer = document.querySelector('[data-nav-links]');
   const header = document.querySelector('.site-header');
+  const brandLink = document.querySelector('.brand[href="#top"]');
   const navPill = document.querySelector('.nav-pill');
   const navLinks = [...document.querySelectorAll('.nav-link[href^="#"]')];
   let lockedSectionId = null;
@@ -93,6 +94,32 @@
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') setMenuOpen(false);
+  });
+
+  // The brand/logo is a true "back to top" control. Native #top anchor
+  // scrolling respects the page's mobile scroll-padding, which can stop short
+  // of y=0 or even nudge the page down when already at the top. Handle it
+  // explicitly so RN always returns to the absolute top on every layout.
+  brandLink?.addEventListener('click', (event) => {
+    event.preventDefault();
+    setMenuOpen(false);
+    lockedSectionId = null;
+
+    // Remove any section hash without reloading the page.
+    history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+
+    // The top of the page deliberately has no active nav pill.
+    navLinks.forEach((navLink) => {
+      navLink.classList.remove('active');
+      navLink.removeAttribute('aria-current');
+    });
+    requestAnimationFrame(positionNavPill);
   });
 
   navLinksContainer?.querySelectorAll('a').forEach((link) => {

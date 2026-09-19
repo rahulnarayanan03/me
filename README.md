@@ -145,3 +145,6 @@ The same site automatically switches layout using CSS media queries. Desktop/lap
 - Documents and other phone nav targets land immediately below the header with a small visual gap instead of being obscured by it.
 - The calculation also works when a phone browser requests its desktop viewport.
 - Desktop navigation behaviour is unchanged.
+
+### v31 navigation fix
+The RN brand/logo now acts as an exact back-to-top control. It bypasses anchor scroll offsets, so it always returns to `scrollY = 0` and does not move the page when already at the top.
