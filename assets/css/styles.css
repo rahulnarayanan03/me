@@ -5314,3 +5314,33 @@ html.phone-device #resume .resume-doc {
   width: 100%;
   max-width: 100%;
 }
+
+
+/* ========================================================================== 
+   v37 narrow-phone hero + immediate resume rendering
+   - Scale the mobile portrait from the real phone width so it cannot overlap
+     the title on slimmer handsets, including phone browsers in Desktop mode.
+   - Reserve matching horizontal space beside "Engineer" and lower the portrait
+     slightly so it stays visually centred on the second title line.
+   ========================================================================== */
+@media (max-width: 760px) {
+  .hero-title-cluster .mobile-hero-profile {
+    width: var(--phone-profile-size, clamp(72px, 22vw, 96px));
+    right: 0;
+    bottom: -0.04em;
+  }
+
+  .hero-title-cluster h1 span {
+    max-width: calc(100% - var(--phone-profile-size, clamp(72px, 22vw, 96px)) - 18px);
+  }
+}
+
+html.phone-device .hero-title-cluster .mobile-hero-profile {
+  width: var(--phone-profile-size, 84px);
+  right: 0;
+  bottom: -0.04em;
+}
+
+html.phone-device .hero-title-cluster h1 span {
+  max-width: calc(100% - var(--phone-profile-size, 84px) - 18px);
+}

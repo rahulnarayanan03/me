@@ -27,6 +27,25 @@
   const isPhoneDevice = uaDataMobile || mobileUA || (hasTouch && coarsePointer && screenShortSide <= 900);
   root.classList.toggle('phone-device', isPhoneDevice);
 
+  // Keep the hero portrait proportional to the real handset width. Android
+  // browsers can report a much wider viewport when Desktop site is enabled,
+  // so use screenShortSide rather than viewport width for this phone-only size.
+  const updatePhoneProfileSize = () => {
+    if (!isPhoneDevice) {
+      root.style.removeProperty('--phone-profile-size');
+      return;
+    }
+
+    const currentShortSide = Math.min(
+      Number(window.screen?.width) || window.innerWidth,
+      Number(window.screen?.height) || window.innerHeight
+    );
+    const profileSize = Math.max(72, Math.min(96, currentShortSide * 0.22));
+    root.style.setProperty('--phone-profile-size', `${profileSize.toFixed(1)}px`);
+  };
+
+  updatePhoneProfileSize();
+
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
@@ -303,6 +322,7 @@
 
   window.addEventListener('scroll', updateOnScroll, { passive: true });
   window.addEventListener('resize', () => {
+    updatePhoneProfileSize();
     if (isPhoneDevice || window.innerWidth > 900) setMenuOpen(false);
     updateActiveNavigation();
     updateCaseNavigation();
