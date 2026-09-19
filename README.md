@@ -152,3 +152,8 @@ The RN brand/logo now acts as an exact back-to-top control. It bypasses anchor s
 ## v33 hero update
 - Removed the top "Available full-time from January 2027" hero pill on desktop and mobile.
 - On phones, the profile portrait now sits beside the `Engineer` line to reduce vertical height and bring the hero content up.
+
+
+## v35 refinements
+- Fluid screen-width adaptation on phones.
+- Resume section now places the inline resume directly below the Resume heading.

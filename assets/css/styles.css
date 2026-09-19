@@ -5243,3 +5243,74 @@ html.phone-device .hero-specialism {
   outline: 2px solid #7ca8ff;
   outline-offset: 4px;
 }
+
+
+/* ========================================================================== 
+   v35 screen-fit + resume entry refinement
+   - Keep the layout fluid across phone sizes instead of relying on one fixed
+     handset width.
+   - The Resume nav target now lands immediately on the resume content: only
+     the Resume eyebrow remains above the document.
+   ========================================================================== */
+body {
+  min-height: 100dvh;
+}
+
+#resume .resume-section-heading {
+  max-width: none;
+  margin-bottom: 12px;
+}
+
+#resume .resume-doc {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  /* Fluid phone gutters so 360px, 390px, 412px, 430px, etc. all use the
+     available screen width cleanly without horizontal clipping. */
+  .container {
+    width: calc(100% - clamp(20px, 5vw, 32px));
+  }
+
+  #resume {
+    padding-top: 20px;
+  }
+
+  #resume .resume-section-heading {
+    margin-bottom: 10px;
+  }
+
+  #resume .resume-doc {
+    width: 100%;
+    padding: clamp(16px, 4.5vw, 22px);
+  }
+
+  #resume .resume-doc-head,
+  #resume .resume-entry,
+  #resume .resume-block,
+  #resume .resume-skill-group {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #resume .inline-links,
+  #resume .inline-links a,
+  #resume .resume-entry,
+  #resume .resume-entry p,
+  #resume .resume-entry li {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+}
+
+/* Keep the same screen-fit behaviour on real phones even when the browser is
+   switched to Desktop site and reports a wider CSS viewport. */
+html.phone-device #resume .resume-section-heading {
+  margin-bottom: 10px;
+}
+
+html.phone-device #resume .resume-doc {
+  width: 100%;
+  max-width: 100%;
+}
