@@ -201,11 +201,19 @@
         activeSection = documentsSection;
       }
 
-      // Contact is intentionally a very small end-of-page state. Clicking Contact
-      // still lands at the true bottom, while even a modest upward wheel scroll
-      // returns the highlight to Documents.
-      if (contactSection && distanceFromBottom <= contactActivationZone) {
-        activeSection = contactSection;
+      // On phones, Contact should remain active for the entire Contact section,
+      // not only at the absolute bottom of the page. Once the Contact section's
+      // top edge passes the same navigation marker used by every other section,
+      // keep Contact highlighted until the user scrolls back above that point.
+      // Desktop keeps the small bottom-of-page Contact zone used by the wider layout.
+      if (contactSection) {
+        if (isPhoneDevice) {
+          if (contactSection.getBoundingClientRect().top <= headerOffset) {
+            activeSection = contactSection;
+          }
+        } else if (distanceFromBottom <= contactActivationZone) {
+          activeSection = contactSection;
+        }
       }
     }
 
