@@ -109,10 +109,11 @@
         });
         requestAnimationFrame(positionNavPill);
 
-        // Contact is the last section, so a normal anchor jump can stop at almost
-        // the same scroll position as Documents. Send it to the real page bottom
-        // instead so the two navigation destinations feel visibly different.
-        if (href === '#contact') {
+        // On desktop, keep the deliberate end-of-page Contact landing used to
+        // separate Contact from Documents. On a real phone, use the normal
+        // anchor position instead so the Contact heading lands directly below
+        // the two-row glass navigation like every other section.
+        if (href === '#contact' && !isPhoneDevice) {
           event.preventDefault();
           history.replaceState(null, '', '#contact');
           window.scrollTo({

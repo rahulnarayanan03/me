@@ -4590,7 +4590,7 @@ html[data-theme="light"] .professional-document-card.project-card {
   }
 
   main section[id] {
-    scroll-margin-top: 114px;
+    scroll-margin-top: 0;
   }
 
   /* Put Rahul's face at the top of the phone hero, before the availability
@@ -4878,5 +4878,30 @@ html.phone-device body:not(.project-page) main {
 }
 
 html.phone-device main section[id] {
-  scroll-margin-top: 114px;
+  scroll-margin-top: 0;
+}
+
+
+/* ==========================================================================
+   v28 mobile anchor alignment
+   Mobile previously applied both scroll-padding-top and scroll-margin-top,
+   effectively doubling the fixed-header offset. Keep the header clearance in
+   one place only so tapped nav sections land immediately below the glass nav.
+   ========================================================================== */
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 114px;
+  }
+
+  main section[id] {
+    scroll-margin-top: 0 !important;
+  }
+}
+
+html.phone-device {
+  scroll-padding-top: 114px;
+}
+
+html.phone-device main section[id] {
+  scroll-margin-top: 0 !important;
 }
