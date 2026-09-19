@@ -157,3 +157,7 @@ The RN brand/logo now acts as an exact back-to-top control. It bypasses anchor s
 ## v35 refinements
 - Fluid screen-width adaptation on phones.
 - Resume section now places the inline resume directly below the Resume heading.
+
+
+## v38
+Refined the navigation shell from a frosted acrylic look toward clearer Liquid Glass by reducing tint opacity and blur, and strengthening thin specular edge highlights.

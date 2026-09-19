@@ -5344,3 +5344,237 @@ html.phone-device .hero-title-cluster .mobile-hero-profile {
 html.phone-device .hero-title-cluster h1 span {
   max-width: calc(100% - var(--phone-profile-size, 84px) - 18px);
 }
+
+
+/* ========================================================================== 
+   v38 navigation liquid-glass refinement
+   - Reduce the opaque blue fill that made the shell read like acrylic.
+   - Let more of the page show through with a lighter blur.
+   - Use thin specular highlights and edge lighting for a clearer glass look.
+   - Apply the same treatment to desktop and phone navigation.
+   ========================================================================== */
+
+.site-header {
+  border-color: rgba(224, 237, 255, 0.30);
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.070) 0%,
+      rgba(255, 255, 255, 0.018) 42%,
+      rgba(119, 157, 225, 0.030) 100%),
+    rgba(7, 17, 31, 0.085);
+  -webkit-backdrop-filter: blur(20px) saturate(108%) brightness(1);
+  backdrop-filter: url(#glass-distortion) blur(10px) saturate(108%) brightness(1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    inset 0 -1px 0 rgba(119, 157, 225, 0.075),
+    0 12px 30px rgba(0, 0, 0, 0.24),
+    0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+html[data-theme="dark"] .site-header {
+  border-color: rgba(216, 232, 255, 0.28);
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.060) 0%,
+      rgba(255, 255, 255, 0.012) 44%,
+      rgba(104, 145, 218, 0.026) 100%),
+    rgba(4, 12, 24, 0.075);
+  -webkit-backdrop-filter: blur(20px) saturate(108%) brightness(1);
+  backdrop-filter: url(#glass-distortion) blur(10px) saturate(108%) brightness(1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.27),
+    inset 0 -1px 0 rgba(116, 156, 226, 0.070),
+    0 12px 30px rgba(0, 0, 0, 0.30),
+    0 0 18px rgba(83, 128, 210, 0.045);
+}
+
+/* Safari doesn't support referencing an SVG filter from backdrop-filter, so it
+   falls back to the plain blur above instead of losing the effect entirely. */
+@supports not (backdrop-filter: url(#glass-distortion)) {
+  .site-header {
+    backdrop-filter: blur(20px) saturate(108%) brightness(1);
+  }
+
+  html[data-theme="dark"] .site-header {
+    backdrop-filter: blur(20px) saturate(108%) brightness(1);
+  }
+}
+
+.site-header.scrolled,
+html[data-theme="dark"] .site-header.scrolled {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(116, 156, 226, 0.065),
+    0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+/* Replace the broad frosted glow with a narrow specular edge. */
+.site-header::before {
+  z-index: 1;
+  top: 0;
+  left: 3%;
+  width: 94%;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 12%,
+    rgba(255, 255, 255, 0.46) 48%,
+    rgba(255, 255, 255, 0.18) 84%,
+    transparent 100%);
+  filter: none;
+  opacity: 0.82;
+  transform: none;
+}
+
+html[data-theme="dark"] .site-header::before {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(203, 223, 255, 0.14) 12%,
+    rgba(255, 255, 255, 0.34) 48%,
+    rgba(203, 223, 255, 0.13) 84%,
+    transparent 100%);
+}
+
+/* Subtle refractive sheen, without a milky fill. */
+.site-header::after {
+  z-index: 0;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 16% -20%, rgba(255, 255, 255, 0.13), transparent 34%),
+    linear-gradient(104deg, transparent 33%, rgba(255, 255, 255, 0.055) 49%, transparent 65%);
+  background-size: 100% 100%;
+  background-position: 0 0;
+  opacity: 0.68;
+  transition: none;
+}
+
+.site-header:hover::after {
+  background-position: 0 0;
+}
+
+.nav-pill {
+  border-color: rgba(224, 237, 255, 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.025)),
+    rgba(126, 164, 231, 0.045);
+  -webkit-backdrop-filter: blur(7px) saturate(135%);
+  backdrop-filter: blur(7px) saturate(135%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 0 -1px 0 rgba(112, 151, 220, 0.070),
+    0 5px 14px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] .nav-pill {
+  border-color: rgba(211, 229, 255, 0.22);
+  background:
+    linear-gradient(180deg, rgba(190, 214, 255, 0.095), rgba(255, 255, 255, 0.012)),
+    rgba(101, 137, 201, 0.032);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    inset 0 -1px 0 rgba(105, 147, 221, 0.060),
+    0 5px 14px rgba(0, 0, 0, 0.22),
+    0 0 12px rgba(86, 132, 214, 0.040);
+}
+
+.icon-button,
+.menu-button,
+.project-back-link {
+  border-color: rgba(224, 237, 255, 0.25);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.018)),
+    rgba(120, 158, 224, 0.035);
+  -webkit-backdrop-filter: blur(7px) saturate(135%);
+  backdrop-filter: blur(7px) saturate(135%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.14);
+}
+
+html[data-theme="dark"] .icon-button,
+html[data-theme="dark"] .menu-button,
+html[data-theme="dark"] .project-back-link {
+  border-color: rgba(211, 229, 255, 0.20);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.070), rgba(255, 255, 255, 0.010)),
+    rgba(81, 111, 166, 0.025);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.17),
+    0 4px 12px rgba(0, 0, 0, 0.20);
+}
+
+/* The phone-specific selectors in earlier versions are more specific, so
+   repeat the clearer treatment here to keep mobile and desktop consistent. */
+@media (max-width: 760px) {
+  .nav-pill {
+    border-color: rgba(219, 234, 255, 0.24);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.018)),
+      rgba(106, 145, 212, 0.034);
+    -webkit-backdrop-filter: blur(7px) saturate(135%) brightness(1.015);
+    backdrop-filter: blur(7px) saturate(135%) brightness(1.015);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.23),
+      inset 0 -1px 0 rgba(105, 147, 221, 0.055),
+      0 5px 14px rgba(0, 0, 0, 0.18);
+  }
+
+  html[data-theme="dark"] .nav-pill {
+    border-color: rgba(207, 226, 255, 0.21);
+    background:
+      linear-gradient(180deg, rgba(191, 215, 255, 0.085), rgba(255, 255, 255, 0.010)),
+      rgba(88, 121, 180, 0.026);
+    -webkit-backdrop-filter: blur(7px) saturate(135%) brightness(1.01);
+    backdrop-filter: blur(7px) saturate(135%) brightness(1.01);
+  }
+
+  .nav-pill::before,
+  html[data-theme="dark"] .nav-pill::before {
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+    filter: none;
+    transform: none;
+    opacity: 0.78;
+  }
+}
+
+html.phone-device .nav-pill {
+  border-color: rgba(219, 234, 255, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.018)),
+    rgba(106, 145, 212, 0.034);
+  -webkit-backdrop-filter: blur(7px) saturate(135%) brightness(1.015);
+  backdrop-filter: blur(7px) saturate(135%) brightness(1.015);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.23),
+    inset 0 -1px 0 rgba(105, 147, 221, 0.055),
+    0 5px 14px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"].phone-device .nav-pill {
+  border-color: rgba(207, 226, 255, 0.21);
+  background:
+    linear-gradient(180deg, rgba(191, 215, 255, 0.085), rgba(255, 255, 255, 0.010)),
+    rgba(88, 121, 180, 0.026);
+  -webkit-backdrop-filter: blur(7px) saturate(135%) brightness(1.01);
+  backdrop-filter: blur(7px) saturate(135%) brightness(1.01);
+}
+
+html.phone-device .nav-pill::before,
+html[data-theme="dark"].phone-device .nav-pill::before {
+  top: 0;
+  left: 12%;
+  width: 76%;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  filter: none;
+  transform: none;
+  opacity: 0.78;
+}
