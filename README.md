@@ -148,3 +148,7 @@ The same site automatically switches layout using CSS media queries. Desktop/lap
 
 ### v31 navigation fix
 The RN brand/logo now acts as an exact back-to-top control. It bypasses anchor scroll offsets, so it always returns to `scrollY = 0` and does not move the page when already at the top.
+
+## v33 hero update
+- Removed the top "Available full-time from January 2027" hero pill on desktop and mobile.
+- On phones, the profile portrait now sits beside the `Engineer` line to reduce vertical height and bring the hero content up.

@@ -5129,3 +5129,85 @@ html.phone-device .hero-v2 h1 span {
   padding-bottom: 0.16em;
   margin-bottom: -0.10em;
 }
+
+/* ========================================================================== 
+   v33 hero refinement
+   - Availability pill removed from the hero on all screen sizes.
+   - On phones, the portrait sits beside the shorter second title line instead
+     of consuming a separate row above the heading.
+   ========================================================================== */
+.hero-title-cluster {
+  position: relative;
+}
+
+@media (max-width: 760px) {
+  .hero-v2 {
+    padding-top: 18px;
+  }
+
+  .hero-title-cluster {
+    margin-bottom: 8px;
+  }
+
+  .hero-title-cluster .mobile-hero-profile {
+    position: absolute;
+    right: 2px;
+    bottom: 0.18em;
+    width: 96px;
+    margin: 0;
+    z-index: 2;
+  }
+
+  .hero-title-cluster .hero-v2 h1,
+  .hero-title-cluster h1 {
+    margin-bottom: 0;
+  }
+
+  .hero-title-cluster h1 span {
+    max-width: calc(100% - 122px);
+  }
+
+  .hero-specialism {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-title-cluster .mobile-hero-profile {
+    width: 88px;
+    right: 0;
+    bottom: 0.22em;
+  }
+
+  .hero-title-cluster h1 span {
+    max-width: calc(100% - 108px);
+  }
+}
+
+/* Preserve the same phone hero layout if a real phone requests Desktop site. */
+html.phone-device .hero-title-cluster {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+html.phone-device .hero-title-cluster .mobile-hero-profile {
+  display: block;
+  position: absolute;
+  right: 2px;
+  bottom: 0.18em;
+  width: 96px;
+  margin: 0;
+  z-index: 2;
+}
+
+html.phone-device .hero-title-cluster h1 {
+  margin-bottom: 0;
+}
+
+html.phone-device .hero-title-cluster h1 span {
+  max-width: calc(100% - 122px);
+}
+
+html.phone-device .hero-specialism {
+  margin-top: 12px;
+}
